@@ -1,30 +1,27 @@
 <html>
 	<head>
 		<style>
-			body { color: white; background-color: white; }
+			body {color: white; background-color: black;}
+			canvas {border: 1px solid white;}
 		</style>
-	</head>
-	<body>
-		<canvas id='mainCanvas' width="256" height="256">
-			? wtf ?
-		</canvas>
+		<script src="turing.js"></script>
 		<script>
-			var State = function(move, state, symbol) { 
-				this.symbol = symbol;
-				this.state = state;
-				this.move = move;
-			};
 			var symbols = [
 				'#FF0000',
-				'#FFFF00',
-				'#00FF00'
+				'#00FF00',
+				'#00FFFF'
 			];
-
-
-			var canvas = document.getElementById('mainCanvas');
-			var context = canvas.getContext('2d');
-			context.fillStyle = '#FF0000';
-			context.fillRect(0, 0, 255, 255);
+			var numStates = 5;
 		</script>
+	</head>
+	<body onload='init();'>
+
+		<canvas id="firstCanvas" width="256" height="256">
+			? wtf ?
+		</canvas>
+		<canvas id="secondCanvas" width="256" height="256">
+			? wtf ?
+		</canvas>
+
 	</body>
 </html>
