@@ -4,15 +4,18 @@
 			body {color: white; background-color: black;}
 			canvas {border: 1px solid white;}
 		</style>
-		<script src="turing.js"></script>
 		<script>
 			var symbols = [
-				'#FF0000',
-				'#00FF00',
-				'#00FFFF'
+				[255, 0, 0],
+				[0, 0, 255],
+				[0, 255, 0],
+				[255, 255, 0],
+				[0, 255, 255],
+				[0, 0, 0]
 			];
-			var numStates = 5;
+			var numStates = 20;
 		</script>
+		<script src="turing.js"></script>
 	</head>
 	<body onload='init();'>
 
