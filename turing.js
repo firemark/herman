@@ -116,27 +116,31 @@ function Tape(htmlId) {
 }
 
 var tapes = [];
-var machine = new Machine();
+var machines = [];
 
 function init(){
 
 	tapes = [new Tape('firstCanvas'), new Tape('secondCanvas')];
+	machines = [new Machine(), new Machine()];
 	tapes[0].random();
+	tapes[1].random();
 	
 	window.setInterval(change_state, 1);
 }
 
-var counter = 0;
-
 function change_state(){
-	var tape = tapes[0];
-		
-	machine.changeState(tape.getSymbol());
-	var state = machine.getState();
+	for(i=0; i < 2; i++){
+		var tape = tapes[i];
+		var machine = machines[i];
+			
+		machine.changeState(tape.getSymbol());
+		var state = machine.getState();
 
-	tape.move(state.move);
-	tape.setSymbol(state.symbol);
-	tape.refresh();
+		tape.move(state.move);
+		tape.setSymbol(state.symbol);
+		tape.refresh();		
+	}
+
 	
 	//window.setInterval(change_state, 200);
 }
