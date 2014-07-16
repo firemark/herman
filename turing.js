@@ -16,7 +16,7 @@ function Machine() {
 	var numSymbols = symbols.length,
 		finiteTable = [];
 
-	this.head = this.start_state = randomIndex(numStates);
+	this.head = 0;
 	this.symbol = 0;
 
 	for(symbol in symbols){
@@ -76,13 +76,13 @@ function Tape(htmlId) {
 	}
 
 	this.move = function(dir){
-		for(i in dir){
-			var cur = this.cursor[i];
+		for(var i in dir){
 			this.cursor[i] += dir[i];
+			var cur = this.cursor[i];
 			if (cur > 255)
-				this.cursor[i] = 0;
+				this.cursor[i] -= 255;
 			if (cur < 0)
-				this.cursor[i] = 255;
+				this.cursor[i] += 255;
 		}
 	}
 
@@ -122,25 +122,24 @@ function init(){
 
 	tapes = [new Tape('firstCanvas'), new Tape('secondCanvas')];
 	machines = [new Machine(), new Machine()];
-	tapes[0].random();
-	tapes[1].random();
+	//tapes[0].random();
+	//tapes[1].random();
 	
-	window.setInterval(change_state, 1);
+	window.setTimeout(change_state, 1);
 }
 
 function change_state(){
-	for(i=0; i < 2; i++){
+	for(var i=0; i < 2; i++){
 		var tape = tapes[i];
 		var machine = machines[i];
 			
 		machine.changeState(tape.getSymbol());
 		var state = machine.getState();
 
-		tape.move(state.move);
 		tape.setSymbol(state.symbol);
+		tape.move(state.move);
 		tape.refresh();		
 	}
 
-	
-	//window.setInterval(change_state, 200);
+	window.setTimeout(change_state, 1);
 }
