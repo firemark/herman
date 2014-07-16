@@ -1,11 +1,3 @@
-function randomInt(a, b) {
-  return Math.round((Math.random() * (b - a)) + a);
-};
-
-function randomIndex(a) {
-  return Math.floor((Math.random() * a));
-};
-
 function State(move_x, move_y, state, symbol) { 
   this.symbol = symbol;
   this.state = state;
@@ -18,6 +10,7 @@ function Machine() {
 
   this.head = 0;
   this.symbol = 0;
+  this.score = 0;
 
   for(symbol in symbols){
     var coll = [];
@@ -47,7 +40,7 @@ function Machine() {
 
   this.getSymbol = function(){
     return this.symbol;
-  }  
+  }
 
 }
 
@@ -60,17 +53,20 @@ function Tape(htmlId) {
   this.arr_size = element.width * element.height;
 
   this.symbolData = Array(this.arr_size);
-  this.cursor = [Math.floor(element.width / 2),
-                 Math.floor(element.height / 2)];    
+  
 
   this.reset = function(symbolId){
     symbolId = symbolId || 0;
     for(i=0; i < this.arr_size; i++){
       this.symbolData[i] = symbolId;
     }
+
     this.ctx.fillStyle = 'rgb(' + symbols[symbolId] + ')';
     this.ctx.fillRect(0, 0, this.sizeSubOne[0], this.sizeSubOne[1]);
+
     this.imageData = this.ctx.getImageData(0, 0, this.sizeSubOne[0], this.sizeSubOne[1]);
+    this.cursor = [Math.floor(this.size[0] / 2),
+                   Math.floor(this.size[1] / 2)];  
   }
 
   this.random = function(){
@@ -119,33 +115,4 @@ function Tape(htmlId) {
   }
 
   this.reset();
-}
-
-var tape = null;
-var machines = [];
-
-function init(){
-
-  tape = new Tape('mainCanvas');
-  machines = [new Machine(), new Machine()];
-  //tape.random();
-  //tapes[1].random();
-  
-  window.setTimeout(change_state, 1);
-}
-
-function change_state(){
-  for(var c=0; c < 32; c++){
-    var machine = machines[0];
-      
-    machine.changeState(tape.getSymbol());
-    var state = machine.getState();
-
-    tape.setSymbol(state.symbol);
-    tape.move(state.move);
-  }
-  tape.refresh();
-
-
-  window.setTimeout(change_state, 1);
 }
