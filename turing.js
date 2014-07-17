@@ -12,7 +12,7 @@ function Machine() {
   this.symbol = 0;
   this.score = 0;
 
-  for(symbol in symbols){
+  for(var symbol = 0; symbol < numSymbols; symbol++){
     var coll = [];
     for(i=0; i < numStates; i++){
       var state = new State(
@@ -57,7 +57,7 @@ function Tape(htmlId) {
 
   this.reset = function(symbolId){
     symbolId = symbolId || 0;
-    for(i=0; i < this.arr_size; i++){
+    for(var i=0; i < this.arr_size; i++){
       this.symbolData[i] = symbolId;
     }
 
@@ -71,19 +71,20 @@ function Tape(htmlId) {
 
   this.random = function(){
     var numSymbols = symbols.length;
-    for(i=0; i < this.arr_size; i++){
+    for(var i=0; i < this.arr_size; i++){
       this.setSymbol(randomIndex(numSymbols), i);
     }
     this.refresh();
   }
 
   this.move = function(dir){
-    for(var i in dir){
+    var lenDir = dir.length;
+    for(var i = 0; i < lenDir; i++){
       this.cursor[i] += dir[i];
       var cur = this.cursor[i];
       if (cur > this.sizeSubOne[i])
         this.cursor[i] -= this.sizeSubOne[i];
-      if (cur < 0)
+      else if (cur < 0)
         this.cursor[i] += this.sizeSubOne[i];
     }
   }
