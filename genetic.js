@@ -32,8 +32,10 @@ function Genetic(mach){
             for(var s=0; s < numSymbols; s++)
                 for(var i=0; i < numStates; i++){
                     var id_parent = randomInt(0, 1);
-                    first_child.finiteTable[s][i] = parents[id_parent].finiteTable[s][i];
-                    last_child.finiteTable[s][i] = parents[1 - id_parent].finiteTable[s][i];
+                    if(Math.random() > mutateProbability)
+                        first_child.finiteTable[s][i] = parents[id_parent].finiteTable[s][i];
+                    if(Math.random() > mutateProbability)
+                        last_child.finiteTable[s][i] = parents[1 - id_parent].finiteTable[s][i];
                 }
 
             this.machines.push(first_child);
