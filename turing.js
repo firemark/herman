@@ -4,25 +4,27 @@ function State(move_x, move_y, state, symbol) {
   this.move = [move_x, move_y];
 };
 
+State.random = function(){
+  return new State(
+    randomInt(-1, 1),
+    randomInt(-1, 1), 
+    randomIndex(numStates),
+    randomIndex(symbols.length)
+  );
+}
+
 function Machine() {
-  var numSymbols = symbols.length,
-    finiteTable = [];
+  var finiteTable = [];
 
   this.head = 0;
   this.symbol = 0;
   this.score = 0;
 
-  for(var symbol = 0; symbol < numSymbols; symbol++){
+  for(var s=0; s < symbols.length; s++){
     var coll = [];
-    for(i=0; i < numStates; i++){
-      var state = new State(
-        randomInt(-1, 1),
-        randomInt(-1, 1), 
-        randomIndex(numStates),
-        randomIndex(numSymbols)
-      );
-      coll.push(state);
-    }
+    for(i=0; i < numStates; i++)
+      coll.push(State.random());
+
     finiteTable.push(coll);
   }
 

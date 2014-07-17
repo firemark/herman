@@ -45,14 +45,11 @@ function checkCounters(){
     var genetic = new Genetic(machines);
 
     genetic.selection();
-    
-    //console.log("Scores:");
-    //for(var i=0; i < numMachines; i++)
-    //  console.log("Machine[" + i + "]: " + machines[i].score);
+    genetic.crossover();
 
-    machines = [];
-    for(var i=0; i < numMachines; i++)
-        machines.push(new Machine());
+    //machines = [];
+    //for(var i=0; i < numMachines; i++)
+    //    machines.push(new Machine());
   }
 
   statusNode.innerHTML = "machine: " + counterMachine;
