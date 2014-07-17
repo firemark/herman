@@ -11,10 +11,10 @@ function init(){
   for(var i=0; i < numMachines; i++)
     machines.push(new Machine());
   
-  window.setTimeout(change_state, 1);
+  window.setTimeout(changeState, 1);
 }
 
-function change_state(){
+function changeState(){
   var machine = machines[counterMachine];
   for(var c=0; c < 32; c++){
     machine.changeState(tape.getSymbol());
@@ -24,11 +24,11 @@ function change_state(){
     tape.move(state.move);
   }
   tape.refresh();
-  check_counters();
-  window.setTimeout(change_state, 1);
+  checkCounters();
+  window.setTimeout(changeState, 1);
 }
 
-function check_counters(){
+function checkCounters(){
 
   counter += 32;
   if (counter < maxMachineIterators)
@@ -42,10 +42,13 @@ function check_counters(){
 
   if (++counterMachine >= numMachines){
     counterMachine = 0;
+    var genetic = new Genetic(machines);
 
-    console.log("Scores:");
-    for(var i=0; i < numMachines; i++)
-      console.log("Machine[" + i + "]: " + machines[i].score);
+    genetic.selection();
+    
+    //console.log("Scores:");
+    //for(var i=0; i < numMachines; i++)
+    //  console.log("Machine[" + i + "]: " + machines[i].score);
 
     machines = [];
     for(var i=0; i < numMachines; i++)
