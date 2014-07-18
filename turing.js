@@ -13,16 +13,21 @@ function State(move_x, move_y, state, symbol) {
 
   this.dirAsHtml = function(){
     var s = '';
-    var dir = this.move;
+    var ind = (this.move[0] + 1) + (this.move[1] + 1) * 3;
 
-    return genString(dir.length, function(i){
-      switch(dir[i]){
-        case -1: return '<b class="red">-</b>';
-        case 0: return '<b>0</b>';
-        case 1: return '<b class="green">+</b>';
-        default: return '?';
-      }      
-    });
+    switch(ind){
+      case 0: return '↖';
+      case 1: return '↑';
+      case 2: return '↗';
+      case 3: return '←';
+      case 4: return '<b class="red">∅</b>';
+      case 5: return '→';
+      case 6: return '↙';
+      case 7: return '↓';
+      case 8: return '↘';
+      default: return '<b>?</b>';
+    }
+
   }
 };
 
