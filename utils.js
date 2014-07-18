@@ -17,7 +17,7 @@ function genString(many, func){
     var s = ''
     for(var i=0; i < many; i++)
         s += func(i);
-    return arr;
+    return s;
 }
 
 function addRow(args, node){

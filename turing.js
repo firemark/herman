@@ -2,6 +2,28 @@ function State(move_x, move_y, state, symbol) {
   this.symbol = symbol;
   this.state = state;
   this.move = [move_x, move_y];
+
+  this.asHtml = function(){
+    var s = '';
+    s += this.dirAsHtml();
+    s += this.state;
+    s += String.fromCharCode(65 + this.state);
+    return s;
+  }
+
+  this.dirAsHtml = function(){
+    var s = '';
+    var dir = this.move;
+
+    return genString(dir.length, function(i){
+      switch(dir[i]){
+        case -1: return '<b class="red">-</b>';
+        case 0: return '<b>0</b>';
+        case 1: return '<b class="green">+</b>';
+        default: return '?';
+      }      
+    });
+  }
 };
 
 State.random = function(){
@@ -14,21 +36,15 @@ State.random = function(){
 }
 
 function Machine() {
-  var finiteTable = [];
-
   this.head = 0;
   this.symbol = 0;
   this.score = 0;
 
-  for(var s=0; s < symbols.length; s++){
-    var coll = [];
-    for(i=0; i < numStates; i++)
-      coll.push(State.random());
-
-    finiteTable.push(coll);
-  }
-
-  this.finiteTable = finiteTable;
+  this.finiteTable = genArray(symbols.length, function(i){
+    return genArray(numStates, function(i){
+      return State.random();
+    });
+  });
 
   this.changeState = function(symbol){
     var state = this.finiteTable[symbol][this.head];
@@ -42,6 +58,27 @@ function Machine() {
 
   this.getSymbol = function(){
     return this.symbol;
+  }
+
+  this.showTable = function() {
+    var tableNode = document.getElementById('machineTable');
+    var template = '';
+
+    var head = genArray(numStates, function(i){
+      return String.fromCharCode(65 + i);      
+    })
+
+    template += addRow(['Symbols'].concat(head), 'th');
+
+    for(var symbol=0; symbol < symbols.length; symbol++){
+      var arr = [];
+      for(state=0; state < numStates; state++){
+        arr.push(this.finiteTable[symbol][state].asHtml());
+      }
+      template += addRow(['' + symbol].concat(arr));
+    }
+
+    tableNode.innerHTML = template;
   }
 
 }

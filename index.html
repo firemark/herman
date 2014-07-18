@@ -2,8 +2,12 @@
 	<head>
 		<title>Herman machine</title>
 		<style>
-			body {color: white; background-color: black;}
-			canvas {border: 1px solid white;}
+			body {color: #FEFEFE; background-color: #353839;}
+			canvas {border: 1px solid white; float:left;}
+			#machineTable {float: left; font-family: Monospace; font-}
+			td, th {background-color: #FEFEFE; color: #353839;}
+			.red {color: #933709;}
+			.green {color: #14A989;}
 		</style>
 		<script>
 			var symbols = [
@@ -14,9 +18,9 @@
 				[118, 255, 122],
 				[254, 254, 34]
 			];
-			var numStates = 50;
+			var numStates = 10;
 			var numMachines = 10;
-			var maxMachineIterators = 16 * 1000;
+			var maxMachineIterators = 32 * 1000;
 			var mutateProbability = 0.01;
 
 			function computeScore(data){
@@ -44,6 +48,9 @@
 			? wtf ?
 		</canvas>
 		<p id='status'>???</p>
+		<table id='machineTable'>
+		</table>
+		
 
 	</body>
 </html>

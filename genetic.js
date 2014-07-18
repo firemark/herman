@@ -13,10 +13,9 @@ function Genetic(mach){
 
         console.log('-----');
         
-        for(var i=0; i < this.numPairs; i++){
-            var pair = [this.machines.pop(), this.machines.pop()];
-            this.pairMachines.push(pair);
-        }
+        this.pairMachines = genArray(this.numPairs, function(i){
+            return [this.machines.pop(), this.machines.pop()]
+        });
     };
 
     this.crossover = function(){

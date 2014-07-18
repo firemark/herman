@@ -8,14 +8,17 @@ function init(){
   statusNode = document.getElementById('status');
   statusNode.innerHTML = "machine: " + counterMachine;
   tape = new Tape('mainCanvas');
-  for(var i=0; i < numMachines; i++)
-    machines.push(new Machine());
+  machines = genArray(
+    numMachines,
+    function(i){return new Machine();}
+  )
   
   window.setTimeout(changeState, 1);
 }
 
 function changeState(){
   var machine = machines[counterMachine];
+  machine.showTable();
   for(var c=0; c < 32; c++){
     machine.changeState(tape.getSymbol());
     var state = machine.getState();
