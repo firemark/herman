@@ -6,7 +6,7 @@ function State(move_x, move_y, state, symbol) {
   this.asHtml = function(){
     var s = '';
     s += this.dirAsHtml();
-    s += this.state;
+    s += this.symbol;
     s += String.fromCharCode(65 + this.state);
     return s;
   }
