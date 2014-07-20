@@ -12,7 +12,6 @@ function State(move_x, move_y, state, symbol) {
   }
 
   this.dirAsHtml = function(){
-    var s = '';
     var ind = (this.move[0] + 1) + (this.move[1] + 1) * 3;
 
     switch(ind){
