@@ -2,11 +2,13 @@ var tape = null;
 var machines = [];
 var counter = 0;
 var counterMachine = 0;
-var statusNode = null
+var statusNode = null;
+var scoresNode = null;
 
 function init(){
   statusNode = document.getElementById('status');
-  statusNode.innerHTML = "machine: " + counterMachine;
+  scoresNode = document.getElementById('scoresTable');
+  statusNode.innerHTML = "machine: " + 1;
   tape = new Tape('mainCanvas');
   machines = genArray(
     numMachines,
@@ -38,10 +40,14 @@ function checkCounters(){
     return;
 
   var machine = machines[counterMachine];
-  machine.score = computeScore(tape.symbolData);
+  var score = computeScore(tape.symbolData);
+  machine.score = score;
 
   counter = 0;
   tape.reset();
+
+  scoresNode.innerHTML += addRow([counterMachine + 1, score]);
+  statusNode.innerHTML = "machine: " + (counterMachine + 1);
 
   if (++counterMachine >= numMachines){
     counterMachine = 0;
@@ -50,10 +56,13 @@ function checkCounters(){
     genetic.selection();
     genetic.crossover();
 
+    scoresNode.innerHTML = '';
+    statusNode.innerHTML = "machine: " + 1;
+
     //machines = [];
     //for(var i=0; i < numMachines; i++)
     //    machines.push(new Machine());
   }
 
-  statusNode.innerHTML = "machine: " + counterMachine;
+  
 }

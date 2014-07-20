@@ -4,7 +4,7 @@
 		<style>
 			body {color: #FEFEFE; background-color: #353839; font-family: Monospace;}
 			canvas {border: 1px solid white; float:left;}
-			#machineTable {float: left; }
+			table {float: left; }
 			td, th {background-color: #FEFEFE; color: #353839;}
 			.red {color: #933709;}
 			.green {color: #14A989;}
@@ -18,7 +18,7 @@
 				[118, 255, 122],
 				[254, 254, 34]
 			];
-			var numStates = 10;
+			var numStates = 15;
 			var numMachines = 10;
 			var maxMachineIterators = 32 * 1000;
 			var mutateProbability = 0.01;
@@ -48,8 +48,12 @@
 			? wtf ?
 		</canvas>
 		<p id='status'>???</p>
-		<table id='machineTable'>
+		<table>
+			<thead><th>Num</th><th width='100px'>Score</th></thead>
+			<tbody id='scoresTable'></tbody>
 		</table>
+		<table id='machineTable'></table>
+		
 		
 
 	</body>
