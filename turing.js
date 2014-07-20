@@ -6,9 +6,13 @@ function State(move_x, move_y, state, symbol) {
   this.asHtml = function(){
     var s = '';
     s += this.dirAsHtml();
-    s += this.symbol;
+    s += this.symbolAsHtml();
     s += String.fromCharCode(65 + this.state);
     return s;
+  }
+
+  this.symbolAsHtml = function(){
+    return '<b style="color: rgb('+ symbols[this.symbol] +')">▧</b>'
   }
 
   this.dirAsHtml = function(){
@@ -79,7 +83,8 @@ function Machine() {
       for(state=0; state < numStates; state++){
         arr.push(this.finiteTable[symbol][state].asHtml());
       }
-      template += addRow(['' + symbol].concat(arr));
+      var symbolEl = '' + symbol + ' <b style="color: rgb('+ symbols[symbol] +')">■■■■</b>'
+      template += addRow([symbolEl].concat(arr));
     }
 
     tableNode.innerHTML = template;
