@@ -1,4 +1,4 @@
-var tape = null;
+var tapes = [];
 var machines = [];
 var counter = 0;
 var counterMachine = 0;
@@ -8,11 +8,10 @@ var generation = 0;
 
 function init(){
   statusNode = document.getElementById('status');
-  scoresNode = document.getElementById('scoresTable');
-  statusNode.innerHTML = "machine: " + 1 + ' generation: ' + 0;
-  tape = new Tape('mainCanvas');
+  statusNode.innerHTML = 'generation: ' + 0;
+  tapes = [new Tape('firstCanvas'), new Tape('secondCanvas')];
   machines = genArray(
-    numMachines,
+    2,
     function(i){return new Machine();}
   )
   
@@ -21,16 +20,23 @@ function init(){
 
 function changeState(){
   var machine = machines[counterMachine];
-  machine.showTable();
-  for(var c=0; c < 32; c++){
-    machine.changeState(tape.getSymbol());
-    var state = machine.getState();
 
-    tape.setSymbol(state.symbol);
-    tape.move(state.move);
-  }
-  tape.refresh();
-  checkCounters();
+  for(var i=0; i < 2; i++)
+    machine.showTable('machineTable' + i);
+
+  for(var i=0; i < 2; i++)
+    for(var c=0; c < 32; c++){
+      var tape = tapes[i];
+      var machine = machines[i];
+      machine.changeState(tape.getSymbol());
+      var state = machine.getState();
+
+      tape.setSymbol(state.symbol);
+      tape.move(state.move);
+    }
+  for(var i=0; i < 2; i++)
+    tapes[i].refresh();
+  //checkCounters();
   window.setTimeout(changeState, 1);
 }
 
@@ -47,9 +53,7 @@ function checkCounters(){
   counter = 0;
   tape.reset();
 
-  scoresNode.innerHTML += addRow([counterMachine + 1, score]);
-  statusNode.innerHTML = "machine: " + (counterMachine + 2) + ' '
-                       + 'generation: ' + generation;
+  statusNode.innerHTML = 'generation: ' + generation;
 
   if (++counterMachine >= numMachines){
     counterMachine = 0;
@@ -61,9 +65,7 @@ function checkCounters(){
 
     machines = genetic.machines;
 
-    scoresNode.innerHTML = '';
-    statusNode.innerHTML = "machine: " + 1 + ' '
-                         + 'generation: ' + generation;
+    statusNode.innerHTML = 'generation: ' + generation;
 
     //machines = [];
     //for(var i=0; i < numMachines; i++)

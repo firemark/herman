@@ -70,8 +70,8 @@ function Machine() {
     return this.symbol;
   }
 
-  this.showTable = function() {
-    var tableNode = document.getElementById('machineTable');
+  this.showTable = function(nodeId) {
+    var tableNode = document.getElementById(nodeId);
     var template = '';
 
     var head = genArray(numStates, function(i){
