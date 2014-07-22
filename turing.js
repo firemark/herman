@@ -2,6 +2,7 @@ function State(move_x, move_y, state, symbol) {
   this.symbol = symbol;
   this.state = state;
   this.move = [move_x, move_y];
+  this.counter = 0;
 
   this.asHtml = function(){
     var s = '';
@@ -56,6 +57,7 @@ function Machine() {
 
   this.changeState = function(symbol){
     var state = this.finiteTable[symbol][this.head];
+    state.counter += 1;
     this.head = state.state;
     this.symbol = symbol;
   }

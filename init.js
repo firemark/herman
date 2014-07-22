@@ -59,6 +59,8 @@ function checkCounters(){
     genetic.selection();
     genetic.crossover();
 
+    machines = genetic.machines;
+
     scoresNode.innerHTML = '';
     statusNode.innerHTML = "machine: " + 1 + ' '
                          + 'generation: ' + generation;
