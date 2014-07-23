@@ -1,5 +1,7 @@
 var tapes = [];
 var machines = [];
+var fineMachines = [];
+var actualMachines = [];
 var counter = 0;
 var counterMachine = 0;
 var statusNode = null;
@@ -8,69 +10,73 @@ var generation = 0;
 
 function init(){
   statusNode = document.getElementById('status');
-  statusNode.innerHTML = 'generation: ' + 0;
+
   tapes = [new Tape('firstCanvas'), new Tape('secondCanvas')];
-  machines = genArray(
-    2,
-    function(i){return new Machine();}
-  )
-  
+
+  machines = genArray(numOfTurs * 2, function(i){return new Machine();})
+  actualMachines = [machines[0], machines[1]];
+
+  changeMachines();
+
   window.setTimeout(changeState, 1);
 }
 
-function changeState(){
-  var machine = machines[counterMachine];
-
+function changeMachines(){
+  var pos = counterMachine * 2;
+  actualMachines = [machines[pos], machines[pos + 1]];
+  statusNode.innerHTML = 'turn: ' + counterMachine + ' generation: ' + 0;  
   for(var i=0; i < 2; i++)
-    machine.showTable('machineTable' + i);
+    actualMachines[i].showTable('machineTable' + i);
+}
+
+
+function changeState(){
 
   for(var i=0; i < 2; i++)
     for(var c=0; c < 32; c++){
       var tape = tapes[i];
-      var machine = machines[i];
+      var machine = actualMachines[i];
       machine.changeState(tape.getSymbol());
       var state = machine.getState();
 
       tape.setSymbol(state.symbol);
       tape.move(state.move);
     }
+
   for(var i=0; i < 2; i++)
     tapes[i].refresh();
-  //checkCounters();
-  window.setTimeout(changeState, 1);
-}
-
-function checkCounters(){
 
   counter += 32;
   if (counter < maxMachineIterators)
-    return;
+    window.setTimeout(changeState, 1);
+}
 
-  var machine = machines[counterMachine];
-  var score = computeScore(tape.symbolData);
-  machine.score = score;
+function addFineMachine(machineNum){
+  window.clearTimeout(changeState);
 
   counter = 0;
-  tape.reset();
+  fineMachines.push(actualMachines[machineNum]);
 
-  statusNode.innerHTML = 'generation: ' + generation;
+  for(var i=0; i < 2; i++)
+    tapes[i].reset();
 
-  if (++counterMachine >= numMachines){
+  if (++counterMachine >= numOfTurs){
     counterMachine = 0;
     generation++;
-    var genetic = new Genetic(machines);
+    var genetic = new Genetic(fineMachines);
 
     genetic.selection();
     genetic.crossover();
 
-    machines = genetic.machines;
+    machines = genetic.newMachines;
 
-    statusNode.innerHTML = 'generation: ' + generation;
+    fineMachines = [];
 
-    //machines = [];
-    //for(var i=0; i < numMachines; i++)
-    //    machines.push(new Machine());
   }
+    
+  changeMachines();
 
-  
+  statusNode.innerHTML = 'turn: ' + counterMachine + ' generation: ' + generation;
+  window.setTimeout(changeState, 1);
+
 }

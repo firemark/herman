@@ -2,31 +2,25 @@ function Genetic(mach){
 
     this.machines = mach;
     this.pairMachines = [];
-    this.numPairs = mach.length / 4;
+    this.numPairs = mach.length;
+    this.newMachines = [];
 
     this.selection = function(){
-        this.machines.sort(function(a, b){return a.score - b.score;});
 
-        console.log("Scores:");
-        for(var i=0; i < numMachines; i++)
-            console.log("Machine[" + i + "]: " + machines[i].score);
-
-        console.log('-----');
-        
+        var len = this.machines.length;
         this.pairMachines = genArray(this.numPairs, function(i){
-            return [this.machines.pop(), this.machines.pop()]
+            return [this.machines[randomIndex(len)],
+                    this.machines[randomIndex(len)]];
         });
     };
 
     this.crossover = function(){
         var numSymbols = symbols.length;
+        console.log(this.numPairs);
         for(var p=0; p < this.numPairs; p++){
             var parents = this.pairMachines.pop(),
                 first_child = new Machine(),
                 last_child = new Machine();
-
-            console.log('parent[0]: ' + parents[0].score);
-            console.log('parent[1]: ' + parents[1].score);
 
             for(var s=0; s < numSymbols; s++)
                 for(var i=0; i < numStates; i++){
@@ -41,8 +35,8 @@ function Genetic(mach){
                     }
                 }
 
-            this.machines.push(first_child);
-            this.machines.push(last_child);
+            this.newMachines.push(first_child);
+            this.newMachines.push(last_child);
         }
     }  
 };
