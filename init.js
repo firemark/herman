@@ -14,8 +14,6 @@ function init(){
   tapes = [new Tape('firstCanvas'), new Tape('secondCanvas')];
 
   machines = genArray(numOfTurs * 2, function(i){return new Machine();})
-  actualMachines = [machines[0], machines[1]];
-
   changeMachines();
 
   window.setTimeout(changeState, 1);
@@ -29,6 +27,10 @@ function changeMachines(){
     actualMachines[i].showTable('machineTable' + i);
 }
 
+function setBackgroundInCell(tableId, row, coll, color){
+  var cell = document.getElementById(tableId).rows[row + 1].cells[coll + 1];
+  cell.style.backgroundColor = color;
+}
 
 function changeState(){
 
@@ -41,12 +43,31 @@ function changeState(){
 
       tape.setSymbol(state.symbol);
       tape.move(state.move);
+      var ratio = state.counter / ++counter;
+
+      //console.log(state.symbol, state.state, ratio);
+      if (ratio > 0.25)
+        setBackgroundInCell('machineTable' + i, state.symbol, state.state, '#FF48D0');
+      else if (ratio > 0.15)
+        setBackgroundInCell('machineTable' + i, state.symbol, state.state, '#FF2B2B');
+      else if (ratio > 0.1)
+        setBackgroundInCell('machineTable' + i, state.symbol, state.state, '#FF6E4A');
+      else if (ratio > 0.5)
+        setBackgroundInCell('machineTable' + i, state.symbol, state.state, '#FFA343');
+      else if (ratio > 0.025)
+        setBackgroundInCell('machineTable' + i, state.symbol, state.state, '#FFF44F');
+      else if (ratio > 0.0125)
+        setBackgroundInCell('machineTable' + i, state.symbol, state.state, '#FFFF99');
+      else if (ratio > 0.0025)
+        setBackgroundInCell('machineTable' + i, state.symbol, state.state, '#F0E891');
+
+
     }
 
   for(var i=0; i < 2; i++)
     tapes[i].refresh();
 
-  counter += 32;
+  
   if (counter < maxMachineIterators)
     window.setTimeout(changeState, 1);
 }
