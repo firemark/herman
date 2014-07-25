@@ -13,7 +13,8 @@ function State(move_x, move_y, state, symbol) {
   }
 
   this.symbolAsHtml = function(){
-    return '<b style="color: rgb('+ symbols[this.symbol] +')">▧</b>'
+    var color = 'rgb(' + symbols[this.symbol] + ')';
+    return '<i style="background-color: ' + color + ';"> </i>'
   }
 
   this.dirAsHtml = function(){
