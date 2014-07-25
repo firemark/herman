@@ -8,9 +8,11 @@ function Genetic(mach){
     this.selection = function(){
 
         var len = this.machines.length;
+        shuffle(this.machines);
         this.pairMachines = genArray(this.numPairs, function(i){
-            return [this.machines[randomIndex(len)],
-                    this.machines[randomIndex(len)]];
+            var ind = i * 2;
+            return [this.machines[ind],
+                    this.machines[ind + 1]];
         });
     };
 
@@ -38,5 +40,6 @@ function Genetic(mach){
             this.newMachines.push(first_child);
             this.newMachines.push(last_child);
         }
+        shuffle(this.newMachines);
     }  
 };

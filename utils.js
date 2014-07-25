@@ -31,3 +31,8 @@ function addRow(args, node){
     template += '</tr>';
     return template;
 }
+
+function shuffle(array){
+    //lol :D
+    array.sort(function(){ 0.5 - Math.random(); });
+}
