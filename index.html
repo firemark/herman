@@ -31,23 +31,9 @@
 				[255, 207, 72]
 			];
 			var numStates = 15;
-			var numOfTurs = 10;
+			var numOfTurs = 5;
 			var maxMachineIterators = 256 * 1000;
 			var mutateProbability = 0.01;
-
-			function computeScore(data){
-				var score = 0;
-				var lenSymbols = symbols.length;
-				var lenData = data.length;
-				for(var i = 0; i < lenData; i++){
-					var num = i * i * Math.sin(i * 1.2);
-					var d_i = data[i];
-					if (d_i && d_i == Math.floor(num % lenSymbols))
-						score += 1;
-				}
-
-				return score;
-			}
 		</script>
 		<script src="utils.js"></script>
 		<script src="turing.js"></script>
